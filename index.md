@@ -83,6 +83,17 @@ Now that the environment is set up you can add a post to WordPress
 
 ### Prepare the backup setup
 
+#### Create S3 credentials
+```
+echo -n 'changeit' > RESTIC_PASSWORD
+echo -n '<your-aws-access-key-id-here>' > AWS_ACCESS_KEY_ID
+echo -n '<your-aws-secret-access-key-here>' > AWS_SECRET_ACCESS_KEY
+kubectl create secret generic -n demo s3-secret \
+    --from-file=./RESTIC_PASSWORD \
+    --from-file=./AWS_ACCESS_KEY_ID \
+    --from-file=./AWS_SECRET_ACCESS_KEY
+```
+
 #### Create the S3 Repository CRD for WordPress and MySQL
 ```
 kubectl apply -f stash-demo/wordpress-s3.yaml
