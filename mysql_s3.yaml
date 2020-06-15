@@ -1,0 +1,12 @@
+apiVersion: stash.appscode.com/v1alpha1
+kind: Repository
+metadata:
+  name: s3-mysql
+  namespace: demo
+spec:
+  backend:
+    s3:
+      endpoint: http://172.17.0.2:9000
+      bucket: kubedemo
+      prefix: /wordpress-mysql
+    storageSecretName: s3-secret
