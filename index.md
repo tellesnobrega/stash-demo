@@ -75,9 +75,11 @@ git clone https://github.com/tellesnobrega/stash-demo.git
 ### Deploy wordpress application
 ```
 kubectl create ns wordpress
-kubectl create -n wordpress secret generic mysql-pass --from-literal=password=<MYSQL_ROOT_PASSWORD>
-kubectl create -n wordpress -f stash-demo/mysql-deployment.yaml
-kubectl create -n wordpress -f stash-demo/wordpress-deployment.yaml
+kubectl create secret -n wordpress generic mysql-pass \
+      --from-literal=username=root \
+      --from-literal=password=<MYSQL_ROOT_PASSWORD>
+kubectl apply -f stash-demo/mysql-deployment.yaml
+kubectl apply -f stash-demo/wordpress-deployment.yaml
 ```
 #### Check for wordpress url
 ```
