@@ -119,6 +119,17 @@ kubectl apply -f stash-demo/wordpress-backupconfiguration.yaml
 kubectl apply -f stash-demo/mysql-backupconfiguration.yaml
 ```
 
+Wait until the backups are done.
+```
+watch -n 3 kubectl -n wordpress get backupsession
+```
+
+Pause the backup jobs.
+```
+kubectl patch backupconfiguration -n wordpress wordpress-backup --type="merge" --patch='{"spec": {"paused": true}}'
+kubectl patch backupconfiguration -n wordpress wordpress-mysql-backup --type="merge" --patch='{"spec": {"paused": true}}'
+```
+
 With Stash we can't recover a lost namespace, but we can rebuild an environment with a backup from a destroyed one.
 We will recover two different scenarios:
 
