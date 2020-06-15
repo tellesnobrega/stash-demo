@@ -2,7 +2,7 @@ apiVersion: stash.appscode.com/v1beta1
 kind: BackupConfiguration
 metadata:
   name: wordpress-backup
-  namespace: demo
+  namespace: wordpress
 spec:
   repository:
     name: s3-repo
