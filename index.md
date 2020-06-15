@@ -60,6 +60,13 @@ helm search repo appscode/stash
 helm install stash-operator appscode/stash --version v0.9.0-rc.2 --namespace kube-system
 ```
 
+### Install Stash MySQL Bind
+```
+helm repo add appscode https://charts.appscode.com/stable/
+helm repo update
+helm install appscode/stash-mysql --name=stash-mysql-8.0.14 --version=8.0.14
+```
+
 ### Clone this repo
 ```
 git clone https://github.com/tellesnobrega/stash-demo.git
@@ -98,6 +105,10 @@ kubectl create secret generic -n wordpress s3-secret \
 ```
 kubectl apply -f stash-demo/wordpress-s3.yaml
 kubectl apply -f stash-demo/mysql-s3.yaml
+```
+#### Create the MySQL AppBinding CRD
+```
+kubectl apply -f stash-demo/mysql-appbinding.yaml
 ```
 
 #### Create the BackupConfiguration CRD for WordPress and MySQL
