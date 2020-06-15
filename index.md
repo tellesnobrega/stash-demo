@@ -57,6 +57,7 @@ chmod 700 get_helm.sh
 helm repo add appscode https://charts.appscode.com/stable/
 helm repo update
 helm search repo appscode/stash
+helm install stash-operator appscode/stash --version v0.9.0-rc.2 --namespace kube-system
 ```
 
 ### Clone this repo
