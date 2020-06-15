@@ -150,6 +150,10 @@ Refreshing the Wordpress page you will see that it is not working anymore.
 kubectl apply -f stash-demo/wordpress-restoresession.yaml
 kubectl apply -f stash-demo/mysql-restoresession.yaml
 ```
+Wait until the restore is finished. You can follow the progress using the command below.
+```
+watch -n 2 kubectl get restoresession -n wordpress
+```
 
 Once the wordpress pod is running again, refresh the wordpress and make sure wordpress is completely recovered.
 
@@ -159,9 +163,22 @@ Once the wordpress pod is running again, refresh the wordpress and make sure wor
 ```
 kubectl delete ns wordpress
 kubectl create ns wordpress
-kubectl create -n wordpress secret generic mysql-pass --from-literal=password=<MYSQL_ROOT_PASSWORD>
-kubectl -n wordpress create -f stash-demo/mysql-deployment.yaml
-kubectl -n wordpress create -f stash-demo/wordpress-deployment.yaml
+kubectl create secret -n wordpress generic mysql-pass \
+      --from-literal=username=root \
+      --from-literal=password=<MYSQL_ROOT_PASSWORD>
+kubectl apply -f stash-demo/mysql-deployment.yaml
+kubectl apply -f stash-demo/wordpress-deployment.yaml
+echo -n 'changeit' > RESTIC_PASSWORD
+echo -n '<your-aws-access-key-id-here>' > AWS_ACCESS_KEY_ID
+echo -n '<your-aws-secret-access-key-here>' > AWS_SECRET_ACCESS_KEY
+kubectl create secret generic -n wordpress s3-secret \
+    --from-file=./RESTIC_PASSWORD \
+    --from-file=./AWS_ACCESS_KEY_ID \
+    --from-file=./AWS_SECRET_ACCESS_KEY
+
+kubectl apply -f stash-demo/wordpress-s3.yaml
+kubectl apply -f stash-demo/mysql-s3.yaml
+kubectl apply -f stash-demo/mysql-appbinding.yaml
 ```
 
 ###### Run restore command
