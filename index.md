@@ -88,7 +88,7 @@ Now that the environment is set up you can add a post to WordPress
 echo -n 'changeit' > RESTIC_PASSWORD
 echo -n '<your-aws-access-key-id-here>' > AWS_ACCESS_KEY_ID
 echo -n '<your-aws-secret-access-key-here>' > AWS_SECRET_ACCESS_KEY
-kubectl create secret generic -n demo s3-secret \
+kubectl create secret generic -n wordpress s3-secret \
     --from-file=./RESTIC_PASSWORD \
     --from-file=./AWS_ACCESS_KEY_ID \
     --from-file=./AWS_SECRET_ACCESS_KEY
