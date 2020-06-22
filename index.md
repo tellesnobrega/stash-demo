@@ -64,7 +64,7 @@ helm install stash-operator appscode/stash --version v0.9.0-rc.2 --namespace kub
 ```
 helm repo add appscode https://charts.appscode.com/stable/
 helm repo update
-helm install appscode/stash-mysql --name=stash-mysql-8.0.14 --version=8.0.14
+helm install stash-mysql-8.0.14 appscode/stash-mysql --version=8.0.14
 ```
 
 ### Clone this repo
